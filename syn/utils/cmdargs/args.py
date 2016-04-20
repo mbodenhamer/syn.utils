@@ -7,7 +7,7 @@ from collections import Iterable
 from syn.base import Base, Attr
 
 if six.PY2:
-    str = unicode
+    str = unicode # pragma: no cover
 
 #-------------------------------------------------------------------------------
 # Utilities
