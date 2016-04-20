@@ -66,7 +66,7 @@ test:
 	@$(PYDEV) coverage html
 
 quick-test:
-	@$(PYDEV) nosetests -v --pdb --pdb-failures
+	@$(PYDEV) bash -c "pip install -e .; nosetests -v --pdb --pdb-failures -w tests/"
 
 dist-test: build
 	@$(PYDEV) dist-test $(VERSION)
@@ -81,6 +81,8 @@ show:
 clean:
 	@$(PYDEV) fmap -r syn 'rm -f' '*.py[co]'
 	@$(PYDEV) fmap -r syn -d rmdir __pycache__
+	@$(PYDEV) fmap -r tests 'rm -f' '*.py[co]'
+	@$(PYDEV) fmap -r tests -d rmdir __pycache__
 	@$(PYDEV) make -C docs clean
 
 .PHONY: clean
