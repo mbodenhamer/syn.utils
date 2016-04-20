@@ -41,8 +41,8 @@ build: check
 # Documentation
 
 docs:
-	@$(PYDEV) sphinx-apidoc -f -o docs/ syn/ $$(find syn -name tests)
-	@$(PYDEV) make -C docs html
+	@$(PYDEV) bash -c "pip install -e .; sphinx-apidoc -f -o docs/ syn/ $$(find syn -name tests); make -C docs html"
+#	@$(PYDEV) make -C docs html
 
 view:
 	@python -c "import webbrowser as wb; \

@@ -10,7 +10,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   syn
+   syn.utils
    changelog
 
 Indices and tables
