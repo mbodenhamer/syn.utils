@@ -6,5 +6,5 @@
 #
 
 PyYAML==3.11              # via syn
-six==1.10.0
+six==1.10.0               # via syn
 syn==0.0.3
