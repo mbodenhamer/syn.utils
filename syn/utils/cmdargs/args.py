@@ -1,13 +1,10 @@
 '''Utilities for marshalling command-line arguments.
 '''
-import six
 import threading
+from syn.five import STR, strf
 from contextlib import contextmanager
 from collections import Iterable
 from syn.base import Base, Attr
-
-if six.PY2:
-    str = unicode # pragma: no cover
 
 #-------------------------------------------------------------------------------
 # Utilities
@@ -36,7 +33,7 @@ class Argument(Base):
                  coerce_args = True,
                  optional_none = True,
                  init_validate = True)
-    _attrs = dict(sep = Attr(str, u' ', 
+    _attrs = dict(sep = Attr(STR, ' ', 
                              'Character used to separate multiple values'),
                   quote = Attr(['always', 'multiple', 'never'], 'multiple',
                                ('Values quoting policy - either always quote, '
@@ -48,7 +45,7 @@ class Argument(Base):
                                     'Character to use for quoting values'),
                   single_value = Attr(bool, False, ('Interpret value as '
                                                     'a single value')),
-                  name = Attr(str, doc='The name of the argument')
+                  name = Attr(STR, doc='The name of the argument')
                   )
 
     def __init__(self, *args, **kwargs):
@@ -60,15 +57,15 @@ class Argument(Base):
 
     def render(self, value):
         if (isinstance(value, Iterable) and not self.single_value
-            and not isinstance(value, six.string_types)):
+            and not isinstance(value, STR)):
             if self.quote_elements:
-                out = self.sep.join(quote(str(val), self.quote_char) 
+                out = self.sep.join(quote(strf(val), self.quote_char) 
                                     for val in value)
             else:
-                out = self.sep.join(str(val) for val in value)
+                out = self.sep.join(strf(val) for val in value)
             multiple = True
         else:
-            out = str(value)
+            out = strf(value)
             multiple = False
 
         if self.quote == 'always' or (self.quote == 'multiple' and multiple
@@ -118,7 +115,7 @@ class Option(Argument):
     def render(self, value):
         multiple = False
         if (isinstance(value, Iterable) and not self.single_value
-            and not isinstance(value, six.string_types)):
+            and not isinstance(value, STR)):
             multiple = True
 
         prefix = self.name
